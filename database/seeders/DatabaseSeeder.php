@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Promotion;
+use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -39,5 +40,8 @@ class DatabaseSeeder extends Seeder
 
         DB::table('promotions')->truncate();
         Promotion::factory(5)->create();
+
+        DB::table('teachers')->truncate();
+        Teacher::factory(15)->create();
     }
 }
