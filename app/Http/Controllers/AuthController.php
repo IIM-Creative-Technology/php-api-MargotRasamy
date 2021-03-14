@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
     public function login()
     {
-        $credentials = request(['email', 'password']);
+        $email = request('email');
+        $password = request('password');
 
-        $token       = auth()->attempt($credentials);
+        $token       = auth()->attempt(['email' => $email, 'password' => $password, 'admin'=> true]);
 
         if (!$token) {
             return response()->json('Unauthorized', 401);
@@ -20,12 +20,12 @@ class AuthController extends Controller
         return $this->respondWithToken($token);
     }
 
-    public function respondWithToken(string $token)
+    public function respondWithToken($token)
     {
         return response()->json([
             'access_token' => $token,
             'token_type'   => 'bearer',
-            'expires_in'   => auth()->factory()->getTTL() * 60,
+//            'expires_in'   => auth()->factory()->getTTL() * 60,
         ]);
     }
 

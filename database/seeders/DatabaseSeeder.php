@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $admins = ['Nicolas RAUBER', 'Alexis Gybou', 'Karine MOUSDIK'];
+        $admins = ['Nicolas RAUBER', 'Alexis GYBOU', 'Karine MOUSDIK'];
 
         // \App\Models\User::factory(10)->create();
         DB::table('tasks')->truncate();
@@ -35,7 +35,8 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
                 'password'=>Hash::make('password'),
                 'remember_token'=> Str::random(10),
-                'api_token'=> Str::random(32)]);
+                'api_token'=> Str::random(32),
+                'admin'=> true]);
         }
         // Other users
         User::factory(1)->create();
