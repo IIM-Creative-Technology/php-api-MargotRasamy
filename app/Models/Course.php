@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
-class Student extends Model
+class Course extends Model
 {
     use HasFactory;
 
@@ -13,13 +14,16 @@ class Student extends Model
         return $this->belongsTo('App\Models\Promotion');
     }
 
+    public function teacher() {
+        return $this->belongsTo('App\Models\Teacher');
+    }
+
     protected $fillable = [
-        'firstname',
-        'lastname',
-        'age',
-        'arrival_year',
+        'name',
+        'start_at',
+        'end_at',
+        'end_at',
         'promotion_id',
+        'teacher_id',
     ];
-
-
 }

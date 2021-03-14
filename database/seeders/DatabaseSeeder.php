@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Course;
 use App\Models\Promotion;
 use App\Models\Student;
 use App\Models\Teacher;
@@ -49,6 +50,10 @@ class DatabaseSeeder extends Seeder
 
         DB::table('students')->truncate();
         Student::factory(25)->create();
+
+        DB::table('courses')->truncate();
+        Course::factory(10)->create();
+
         Schema::enableForeignKeyConstraints();
     }
 }
