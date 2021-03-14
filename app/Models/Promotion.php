@@ -9,6 +9,12 @@ class Promotion extends Model
 {
     use HasFactory;
 
+    public function user()
+    {
+        return $this->hasMany('App\Models\User');
+    }
+
+
     protected $fillable = [
         'name',
         'year',

@@ -3,11 +3,13 @@
 namespace Database\Seeders;
 
 use App\Models\Promotion;
+use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
@@ -19,6 +21,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        Schema::disableForeignKeyConstraints();
         $admins = ['Nicolas RAUBER', 'Alexis GYBOU', 'Karine MOUSDIK'];
 
         DB::table('users')->truncate();
@@ -36,12 +39,16 @@ class DatabaseSeeder extends Seeder
                 'admin'=> true]);
         }
         // Other users
-        User::factory(1)->create();
+        User::factory(10)->create();
 
         DB::table('promotions')->truncate();
         Promotion::factory(5)->create();
 
         DB::table('teachers')->truncate();
         Teacher::factory(15)->create();
+
+        DB::table('students')->truncate();
+        Student::factory(25)->create();
+        Schema::enableForeignKeyConstraints();
     }
 }
