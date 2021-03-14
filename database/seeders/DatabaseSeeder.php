@@ -44,20 +44,21 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->create();
 
         DB::table('promotions')->truncate();
-        Promotion::factory(5)->create();
+        Promotion::factory(10)->create();
 
         DB::table('teachers')->truncate();
         Teacher::factory(15)->create();
 
         DB::table('students')->truncate();
-        Student::factory(25)->create();
+        Student::factory(30)->create();
 
         DB::table('courses')->truncate();
-        Course::factory(10)->create();
+        Course::factory(20)->create();
 
         // Change here to add more scores automatically
         DB::table('scores')->truncate();
-        Score::factory(5)->create();
+        Score::factory(20)->create();
+        Score::factory(20)->create();
 
         Schema::enableForeignKeyConstraints();
     }

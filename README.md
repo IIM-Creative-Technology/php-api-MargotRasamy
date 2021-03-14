@@ -1,62 +1,219 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Secured API students grade platform
+##Framework : Laravel
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+## To see the project :
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Install PHP (at least 7.4 version) and MySQL 
+Install [laragon] for Windows (https://laragon.org/)
+Install [mamp] for MacOS (https://www.mamp.info/)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Install a database reader such as TablePlus or SequelPro
+Install [tableplus] for Windows (https://tableplus.com/)
+Install [mysequelpro] for MacOS (https://www.sequelpro.com/)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Install a client request tester such as Postman
+Install [postman] (https://www.postman.com/downloads/)
 
-## Learning Laravel
+### Install Composer 1
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+https://getcomposer.org/
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Clone the project
 
-## Laravel Sponsors
+```console
+git clone git@github.com:IIM-Creative-Technology/php-api-MargotRasamy.git
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### Install the dependencies
 
-### Premium Partners
+* Enter the cloned directory in your terminal : 
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/)**
-- **[OP.GG](https://op.gg)**
+```console
+cd php-api-MargotRasamy && composer install
+```
 
-## Contributing
+### Create a database named api-laravel
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+* Go on TablePlus or Sequel pro and create a database named api-laravel
+* Launch your Php with Laragon or Mamp
 
-## Code of Conduct
+### Launch the migrations and seeds
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```console
+php artisan migrate
+```
 
-## Security Vulnerabilities
+### Launch the migrations and seeds
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```console
+php artisan db:seed
+```
 
-## License
+### Launch the app
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```console
+php artisan serve
+```
+
+### Launch the app
+
+```console
+php artisan serve
+```
+
+### Start testing routes on Postman
+
+Login with admin accounts :
+```console
+GET /api/auth/login
+```
+Use either one of these emails : 
+```console
+nicolas.rauber@edu.devinci.fr | alexis.gybou@edu.devinci.fr | karine.mousdik@edu.devinci.fr
+```
+with the password : 
+```console
+password
+```
+
+You can now copy paste the token received and add it to the bearer for any routes :
+
+#### CLASS PROMOTIONS
+
+List of promotions
+```console
+GET /promotions
+```
+
+Get a specific promotion
+```console
+GET /promotions/{id}
+```
+
+Create a promotion
+```console
+POST /promotions with parameters 'name', 'year'
+```
+
+Update a promotion
+```console
+PUT /promotions/{id}
+```
+
+Delete a promotion
+```console
+DELETE /promotions/{id}
+```
+
+#### TEACHERS
+
+List of teachers
+```console
+GET /teachers
+```
+
+Get a specific teacher
+```console
+GET /teachers/{id}
+```
+
+Create a teacher
+```console
+POST /teachers with parameters 'firstname','lastname','arrival_year'
+```
+
+Update a teacher
+```console
+PUT /teachers/{id}
+```
+
+Delete a teacher
+```console
+DELETE /teachers/{id}
+```
+
+#### STUDENTS
+
+List of students
+```console
+GET /students
+```
+
+List of students of a specific promotion
+```console
+GET /students with query parameters 'promotionId' or 'promotionName' keys
+```
+
+Get a specific student
+```console
+GET /students/{id}
+```
+
+Create a student
+```console
+POST /students with parameters 'firstname','lastname','age','arrival_year','promotion_id'
+```
+
+Update a student
+```console
+PUT /students/{id} with any or all of the post parameters
+```
+
+Delete a student
+```console
+DELETE /students/{id}
+```
+
+#### COURSES
+
+List of courses
+```console
+GET /courses
+```
+
+Get a specific course
+```console
+GET /courses/{id}
+```
+
+Create a course
+```console
+POST /courses with parameters 'name','start_at','end_at','promotion_id','teacher_id'
+```
+
+Update a course
+```console
+PUT /courses/{id} with any or all of the post parameters
+```
+
+Delete a course
+```console
+DELETE /courses/{id}
+```
+
+#### SCORES / GRADES
+
+List of scores
+```console
+GET /scores
+```
+
+List of scores of a specific student
+```console
+GET /scores/{id} with query parameter 'studentId'
+```
+
+List of scores of a specific student in a specific course
+```console
+GET /scores/{id} with query parameter 'studentId', 'courseId'
+```
+
+Create a score for a student in a specific course
+```console
+POST /scores with parameters 'score', 'student_id', 'course_id'
+```
+
+## Enjoy the API !
+
+© Margot RASAMY - 2021

@@ -20,6 +20,8 @@ use \Illuminate\Support\Facades\DB;
 |
 */
 
+//PS: Sorry. Didn't have quite the time to organize in routes in controllers.
+
 Route::group([
     'middleware' => 'api',
     'prefix'     => 'auth',
@@ -28,6 +30,8 @@ Route::group([
 });
 
 Route::middleware('jwt.auth')->group(function () {
+
+    // PROMOTIONS
     // READ
     Route::get('/promotions', function () {
         return Promotion::all();
@@ -35,7 +39,7 @@ Route::middleware('jwt.auth')->group(function () {
     Route::get('/promotions/{promotionId}', function ($promotionId) {
         return Promotion::findOrFail($promotionId);
     });
-    // CREATE
+    // CREATE parameters: 'name','year'
     Route::post('/promotions', function (Request $request) {
         return (Promotion::create($request->all()));
     });
@@ -60,7 +64,7 @@ Route::middleware('jwt.auth')->group(function () {
     Route::get('/teachers/{id}', function ($id) {
         return Teacher::findOrFail($id);
     });
-    // CREATE
+    // CREATE parameters 'firstname','lastname','arrival_year',
     Route::post('/teachers', function (Request $request) {
         return (Teacher::create($request->all()));
     });
@@ -114,15 +118,31 @@ Route::middleware('jwt.auth')->group(function () {
         }
         return 'Please send your promotion name or promotion id in the query parameters.';
     });
-    // CREATE
+    // CREATE parameters : 'firstname','lastname','age','arrival_year','promotion_id'
     Route::post('/students', function (Request $request) {
-        return (Student::create($request->all()));
+        $promotionName = DB::table('promotions')
+            ->where('promotions.id', $request->promotion_id)
+            ->select(
+                'promotions.name')
+            ->get();
+        $student = new Student(($request->all()));
+        $student->promotion_name = $promotionName[0]->name;
+        $student->save();
+        return $student;
     });
     // UPDATE
     Route::put('/students/{id}', function ($id, Request $request) {
-        $students = Student::findOrFail($id);
-        $students->update($request->all());
-        return $students;
+        $student = Student::findOrFail($id);
+        $student->update($request->all());
+        if ($request->promotion_id) {
+            $promotionName = DB::table('promotions')
+                ->where('promotions.id', $request->promotion_id)
+                ->select('promotions.name')
+                ->get();
+            $student->promotion_name = $promotionName[0]->name;
+        }
+        $student->save();
+        return $student;
     });
     // DELETE
     Route::delete('/students/{id}', function ($id) {
@@ -138,7 +158,7 @@ Route::middleware('jwt.auth')->group(function () {
     Route::get('/courses/{id}', function ($id) {
         return Course::findOrFail($id);
     });
-    // CREATE
+    // CREATE parameters 'name','start_at','end_at','promotion_id','teacher_id'
     Route::post('/courses', function (Request $request) {
         $promotionName = DB::table('promotions')
             ->where('promotions.id', $request->promotion_id)
@@ -189,7 +209,7 @@ Route::middleware('jwt.auth')->group(function () {
     // DELETE
     Route::delete('/courses/{id}', function ($id) {
         Course::findOrFail($id)->delete();
-        return response()->json('This course is no longer given at IIM !');
+        return response()->json('This course is no longer given or available at IIM !');
     });
 
     //SCORES
