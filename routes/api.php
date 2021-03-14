@@ -59,4 +59,26 @@ Route::middleware('jwt.auth')->group(function () {
     Route::get('/test', function () {
         return response()->json('bonjour');
     });
+    // READ
+    Route::get('/promotions', function () {
+        return \App\Models\Promotion::all();
+    });
+    Route::get('/promotions/{promotionId}', function ($promotionId) {
+        return \App\Models\Promotion::findOrFail($promotionId);
+    });
+    // CREATE
+    Route::post('/promotions', function (Request $request) {
+        return (\App\Models\Promotion::create($request->all()));
+    });
+    // UPDATE
+    Route::put('/promotions/{promotionId}', function ($promotionId, Request $request) {
+        $promotion = \App\Models\Promotion::findOrFail($promotionId);
+        $promotion->update($request->all());
+        return $promotion;
+    });
+    // DELETE
+    Route::delete('/promotions/{promotionId}', function ($promotionId) {
+        \App\Models\Promotion::findOrFail($promotionId)->delete();
+        return response()->json('Successfully deleted the promotion !');
+    });
 });
