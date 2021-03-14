@@ -15,39 +15,6 @@ use \App\Http\Controllers\AuthController;
 |
 */
 
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
-
-//Route::middleware('api_token')->group(function () {
-//// Nous retourne toutes les tâches
-//    Route::get('/tasks', function () {
-//        return Task::all();
-//    });
-//
-//// Nous retourne une tâche particulière
-//    Route::get('/tasks/{taskId}', function ($taskId) {
-//        return Task::findOrFail($taskId);
-//    });
-//
-//// Modifie une tâche particulière
-//    Route::put('/tasks/{taskId}', function ($taskId, Request $request) {
-//        $task = Task::findOrFail($taskId);
-//        $task->update($request->all());
-//        return $task;
-//    });
-//
-//// Supprimer une tâche particulière
-//    Route::delete('/tasks/{taskId}', function ($taskId) {
-//        return Task::findOrFail($taskId)->delete();
-//    });
-//
-//// On ajoute une tâche
-//    Route::post('/tasks', function (Request $request) {
-//        return (Task::create($request->all()));
-//    });
-//});
-
 Route::group([
     'middleware' => 'api',
     'prefix'     => 'auth',
@@ -56,9 +23,6 @@ Route::group([
 });
 
 Route::middleware('jwt.auth')->group(function () {
-    Route::get('/test', function () {
-        return response()->json('bonjour');
-    });
     // READ
     Route::get('/promotions', function () {
         return \App\Models\Promotion::all();
