@@ -208,6 +208,16 @@ Route::middleware('jwt.auth')->group(function () {
         if (!isset($student)) {
             return "Sorry but this student doesn't exist at IIM";
         }
+        if ($request->query('courseId')) {
+            $score = DB::table('scores')
+                ->where('scores.student_id', $request->query('studentId'))
+                ->where('scores.course_id', $request->query('courseId'))
+                ->get();
+            if (count($score)== 0) {
+                return "This student has no score yet in this course. You can add his/her score.";
+            }
+            return $score;
+        }
         $score = DB::table('scores')
             ->where('scores.student_id', $request->query('studentId'))
             ->get();
