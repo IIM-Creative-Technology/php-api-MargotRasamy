@@ -26,7 +26,6 @@ class Course extends Model
         'name',
         'start_at',
         'end_at',
-        'end_at',
         'promotion_id',
         'teacher_id',
     ];
