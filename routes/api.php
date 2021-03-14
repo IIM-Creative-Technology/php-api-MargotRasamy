@@ -168,21 +168,18 @@ Route::middleware('jwt.auth')->group(function () {
         if ($request->promotion_id) {
             $promotionName = DB::table('promotions')
                 ->where('promotions.id', $request->promotion_id)
-                ->select(
-                    'promotions.name')
+                ->select('promotions.name')
                 ->get();
             $course->promotion_name = $promotionName[0]->name;
         }
         if ($request->teacher_id) {
             $teacherFirstname = DB::table('teachers')
                 ->where('teachers.id', $request->teacher_id)
-                ->select(
-                    'teachers.firstname')
+                ->select('teachers.firstname')
                 ->get();
             $teacherLastname = DB::table('teachers')
                 ->where('teachers.id', $request->teacher_id)
-                ->select(
-                    'teachers.lastname')
+                ->select('teachers.lastname')
                 ->get();
             $course->teacher_name = $teacherFirstname[0]->firstname . ' ' . $teacherLastname[0]->lastname;
         }
@@ -224,6 +221,30 @@ Route::middleware('jwt.auth')->group(function () {
         if (count($score)== 0) {
             return "This student has no score yet. You can add his/her score.";
         }
+        return $score;
+    });
+
+    // CREATE POST parameters score, student_id, course_id
+    Route::post('/scores', function (Request $request) {
+        $courseName = DB::table('courses')
+            ->where('courses.id', $request->course_id)
+            ->select('courses.name')
+            ->get();
+        $studentFirstname = DB::table('students')
+            ->where('students.id', $request->student_id)
+            ->select(
+                'students.firstname')
+            ->get();
+        $studentLastname = DB::table('students')
+            ->where('students.id', $request->student_id)
+            ->select(
+                'students.lastname')
+            ->get();
+
+        $score = new Score(($request->all()));
+        $score->course_name = $courseName[0]->name;
+        $score->student_name = $studentFirstname[0]->firstname . ' ' . $studentLastname[0]->lastname;
+        $score->save();
         return $score;
     });
 });
