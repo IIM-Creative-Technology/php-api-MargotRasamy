@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Task;
+use App\Models\Promotion;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -20,10 +20,6 @@ class DatabaseSeeder extends Seeder
     {
         $admins = ['Nicolas RAUBER', 'Alexis GYBOU', 'Karine MOUSDIK'];
 
-        // \App\Models\User::factory(10)->create();
-        DB::table('tasks')->truncate();
-        Task::factory(10)->create();
-
         DB::table('users')->truncate();
 
         // Create admins
@@ -40,5 +36,8 @@ class DatabaseSeeder extends Seeder
         }
         // Other users
         User::factory(1)->create();
+
+        DB::table('promotions')->truncate();
+        Promotion::factory(5)->create();
     }
 }
