@@ -6,6 +6,7 @@ use \App\Models\Promotion;
 use \App\Models\Teacher;
 use \App\Models\Student;
 use \App\Models\Course;
+use \App\Models\Score;
 use \App\Http\Controllers\AuthController;
 use \Illuminate\Support\Facades\DB;
 /*
@@ -192,5 +193,27 @@ Route::middleware('jwt.auth')->group(function () {
     Route::delete('/courses/{id}', function ($id) {
         Course::findOrFail($id)->delete();
         return response()->json('This course is no longer given at IIM !');
+    });
+
+    //SCORES
+    // READ
+    Route::get('/scores', function () {
+        return Score::all();
+    });
+
+    Route::get('/scores', function (Request $request) {
+        $student = DB::table('students')
+            ->where('students.id', $request->query('studentId'))
+            ->get();
+        if (!isset($student)) {
+            return "Sorry but this student doesn't exist at IIM";
+        }
+        $score = DB::table('scores')
+            ->where('scores.student_id', $request->query('studentId'))
+            ->get();
+        if (count($score)== 0) {
+            return "This student has no score yet. You can add his/her score.";
+        }
+        return $score;
     });
 });
