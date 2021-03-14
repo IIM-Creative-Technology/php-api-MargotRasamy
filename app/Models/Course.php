@@ -18,6 +18,10 @@ class Course extends Model
         return $this->belongsTo('App\Models\Teacher');
     }
 
+    public function score() {
+        return $this->hasMany('App\Models\Score');
+    }
+
     protected $fillable = [
         'name',
         'start_at',

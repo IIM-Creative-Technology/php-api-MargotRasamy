@@ -13,6 +13,10 @@ class Student extends Model
         return $this->belongsTo('App\Models\Promotion');
     }
 
+    public function score() {
+        return $this->hasMany('App\Models\Score');
+    }
+
     protected $fillable = [
         'firstname',
         'lastname',
@@ -20,6 +24,4 @@ class Student extends Model
         'arrival_year',
         'promotion_id',
     ];
-
-
 }

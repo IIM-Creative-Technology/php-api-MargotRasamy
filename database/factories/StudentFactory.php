@@ -29,7 +29,7 @@ class StudentFactory extends Factory
         return [
             'firstname'=> $this->faker->firstName(),
             'lastname'=>$this->faker->lastName(),
-            'age'=>$this->faker->numberBetween($min = 16, $max = 30),
+            'age'=>$this->faker->numberBetween($min = 16, $max = 26),
             'arrival_year'=>$this->faker->year($max = 'now'),
             'promotion_id' => $promotion_id,
             'promotion_name' => $promotion_name[0]->name,

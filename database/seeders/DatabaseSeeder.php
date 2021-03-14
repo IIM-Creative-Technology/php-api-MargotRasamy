@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Course;
 use App\Models\Promotion;
+use App\Models\Score;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
@@ -53,6 +54,10 @@ class DatabaseSeeder extends Seeder
 
         DB::table('courses')->truncate();
         Course::factory(10)->create();
+
+        // Change here to add more scores automatically
+        DB::table('scores')->truncate();
+        Score::factory(5)->create();
 
         Schema::enableForeignKeyConstraints();
     }
